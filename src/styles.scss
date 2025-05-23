@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+// Define the Cyan/Orange theme
+$theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$cyan-palette, 500), // Cyan-500 (~#00BCD4)
+    accent: mat.define-palette(mat.$orange-palette, 500), // Orange-500 (~#FF9800)
+    warn: mat.define-palette(mat.$red-palette, 500) // Default warn palette
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Apply the theme to all Material components
+@include mat.all-component-themes($theme);
+
+// Global styles (unchanged)
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

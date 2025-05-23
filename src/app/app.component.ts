@@ -1,10 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { WeatherService } from './weather.service';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatFormField } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+import { MatSuffix } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatToolbar, MatFormField, MatLabel, MatSuffix],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
