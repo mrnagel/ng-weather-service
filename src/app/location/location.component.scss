@@ -1,0 +1,42 @@
+mat-card-title{
+    font-size: 30px
+}
+
+mat-card{
+    width: 550px;
+    //background-color: rgb(136, 172, 212);
+    background-image: '';
+    background-size: cover;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+    
+}
+
+mat-card-title{
+    color: white;
+}
+
+mat-card-content{
+    color: white;
+}
+
+span{
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+}
+
+p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+*{
+    outline: 2px solid pink;
+}
+
+
+

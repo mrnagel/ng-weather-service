@@ -1,0 +1,6 @@
+
+<div class="flex-container">
+    @for(city of cityData; track city){
+        <app-location [city]="city" [tempFormat]="tempFormat"></app-location>
+    }
+</div>
