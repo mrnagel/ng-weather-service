@@ -23,7 +23,9 @@ export class HomeComponent {
   subscription: Subscription | undefined;
 
   ngOnInit() {
-    this.cityData = this.weatherService.getData();
+    this.weatherService.filteredArray$.subscribe(data => {
+      this.cityData = data
+    })
     this.subscription = this.tempService.tempFormat$.subscribe((format: string) => {
       this.tempFormat = format;
     });

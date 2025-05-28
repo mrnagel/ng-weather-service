@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { City } from './city';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,11 @@ export class WeatherService {
   private readonly baseUrlComponents: string[] = ['http://api.weatherapi.com/v1/forecast.json?key=647da063ff7b4d5db62174534252305&q=', '&days=5&aqi=no&alerts=yes']
   
   cityWeatherArray: any[] = []; //have to say any if we don't know strucuture. otherwise will encounter errors below
+  filteredCityWeatherArray = new BehaviorSubject<any[]>([]);
+  filteredArray$ = this.filteredCityWeatherArray.asObservable();
 
   constructor(private http: HttpClient) {
-    this.loadFromLocalStorage();
-
-    if(this.cityWeatherArray.length == 0) { //case where we're navigating to detail from home page
-      this.fetchWeatherData();
-    }
-  }
-
-  private loadFromLocalStorage(){
-    const storedData = localStorage.getItem(this.storageKey)
-    if(storedData){
-      this.cityWeatherArray = JSON.parse(storedData);
-      console.log("Loaded from localStorage: ", this.cityWeatherArray);
-    }
-  }
-
-  private saveToLocalStorage(){
-    localStorage.setItem(this.storageKey, JSON.stringify(this.cityWeatherArray));
-    console.log("Saved to localStorage:", this.cityWeatherArray);
-
+    this.fetchWeatherData();
   }
 
   private fetchWeatherData() {
@@ -45,55 +30,24 @@ export class WeatherService {
         };
 
         this.cityWeatherArray.push(cityDataWithPhoto);
-        this.saveToLocalStorage(); // Save updated data to localStorage
       });
     }
+    this.filteredCityWeatherArray.next(this.cityWeatherArray);
   }
 
-    //  for(let city of this.cityArray){
-    //   let url = `${this.baseUrlComponents[0]}${city.name}${this.baseUrlComponents[1]}`
-    //   let data = this.http.get(url);
-    //   data.subscribe(response => {
-    //     const cityDataWithPhoto = {
-    //       ...response,
-    //       photo: city.photo,
-    //       id: Number(city.id),
-    //     };
+  filterResults(text: string){
+    const results = this.cityWeatherArray.filter((city) => city.location.name.toLowerCase().includes(text.toLowerCase()));
 
-    //     this.cityWeatherArray.push(cityDataWithPhoto);
-    //   });
+    this.filteredCityWeatherArray.next(results);
+  }
 
-    // } //angular performs dependency injection with whatever's in parameters of constructor
-  
   getData(){
-    return this.cityWeatherArray;
+    return this.filteredCityWeatherArray;
   }
 
   getCityById(id: number){
-    if(!this.cityWeatherArray || this.cityWeatherArray.length == 0){
-      console.log("Data unavailable, checking localStorage");
-      this.loadFromLocalStorage();
-    }
-
     return this.cityWeatherArray.find(city => city.id == id) || null;
   }
-
-  // getCityById(id: number){
-  //   if(this.cityWeatherArray){
-  //     console.log("cityWeatherArray:", this.cityWeatherArray);
-  //     console.log("cityWeatherArray length:", this.cityWeatherArray.length);
-  //     console.log("Attributes of first city: ", Object.keys(this.cityWeatherArray[0]));
-  //     return this.cityWeatherArray.find(city => city.id === id);
-
-  //   }
-  //   else{
-  //     console.log("cityWeatherArray is undefined");
-  //   }
-
-  //   return 1;
-  // }
-  
-
 
   cityArray: City[] = [
     {

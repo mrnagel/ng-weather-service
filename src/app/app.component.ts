@@ -23,7 +23,6 @@ export class AppComponent {
   currentFormat = 'fahrenheit';
 
   constructor(){
-    this.weatherData = this.weatherService.getData();
     //need to make sure WeatherService is injected before the above function is called, hence in constructor
     //at this point, WeatherService will have been injected
     //angular initializes properties before the constructor runs
@@ -43,7 +42,7 @@ export class AppComponent {
   }
 
   filterResults(text: string){
-    console.log("here is the string", text);
+    this.weatherService.filterResults(text);
   }
 
 }
