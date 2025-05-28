@@ -1,20 +1,27 @@
 <mat-toolbar>
-    <span style="margin-left: 30px;">Le Weather App</span>
-    <span class="spacer"></span>
+        <a [routerLink]="['/']"><img class="logo" src="../assets/logo.png" alt="oh no"></a>
+
+        <span class="spacer"></span>
 
     <mat-slide-toggle (change)="onToggleChange($event)">°F / °C</mat-slide-toggle>
 
     <mat-form-field subscriptSizing="dynamic">
         <mat-label class="search-bar">Search for a city...</mat-label>
-        <input matInput>
+        <input matInput type="text" #filter/> 
     </mat-form-field>
+    
+    <button mat-stroked-button type="button" (click)="filterResults(filter.value); filter.value =''">Search</button>
 </mat-toolbar>
 <mat-toolbar class="secondary">
 </mat-toolbar>
 
-@defer {
-    <app-home [tempFormat]="tempFormat" ></app-home>
-}
+
+<router-outlet></router-outlet>
+<!-- original: <app-home [tempFormat]="tempFormat" ></app-home> -->
+
+<mat-toolbar class="footer">
+    <p style="font-size: 12px"><em>© 2025 matt.nagl. go follow my instagram</em></p>
+</mat-toolbar>
 
 
 

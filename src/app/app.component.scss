@@ -11,9 +11,16 @@ mat-toolbar{
     height: 40px;
 }
 
+.logo{
+    max-height: 72px;
+    max-width: 72px;
+    margin-left: 48px;
+    margin-top: 6px;
+}
 
 .spacer {
     flex: 1 1 auto;
+    min-width: 40px;
 }
 
 mat-form-field{
@@ -24,5 +31,10 @@ mat-form-field{
 
 mat-slide-toggle{
     margin-right: 15px;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
 }
 

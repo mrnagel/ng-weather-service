@@ -1,0 +1,97 @@
+<div class="outer-shell">
+    <div class="flex-container">
+        <mat-card class="main-card" [style.backgroundImage]="'url(' + city.photo + ')'" > <!--use camelCase when using property binding in html (can use to bind css attributes with [style.attbte])-->
+            <mat-card-header>
+                <mat-card-title>
+                    {{ city.location.name }}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                    <p style="font-size: 64px"> {{ city.current.temp }}</p>
+                    <span> <img src="{{ city.current.condition.icon }}"> {{city.current.condition.text}} 
+                        <span class="spacer"></span>
+                    </span>
+                    <span class="high-low">
+                        High: {{ city.forecast.forecastday[0].day.maxtemp}} · Low: {{city.forecast.forecastday[0].day.mintemp}}
+                    </span>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="detail-card">
+            <mat-card-header>
+                <mat-card-title>Weather today in {{ city.location.name }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <p id="feels-like">Feels Like<br><span styles="font-size: 30px">{{ city.current.feelsLike }}</span></p>
+
+                    <span class="stats">Wind<span class="spacer"></span>{{ city.current.wind }}</span>
+                    <hr>
+                    <span class="stats">Visibility<span class="spacer"></span>{{city.current.vis }}</span>
+                    <hr>
+                    <span class="stats">Humidity<span class="spacer"></span>{{ city.current.humidity }}%</span>
+                    <hr>
+                    <span class="stats">Pressure<span class="spacer"></span>{{ city.current.pressure }}</span>
+
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="forecast-card">
+            <mat-card-header>
+                <mat-card-title>Daily Forecast</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="forecast-div">
+                    <span class="day" style="font-weight: 425">Today</span>
+                    <span class="day">{{ city.forecast.forecastday[0].day.maxtemp }} / {{ city.forecast.forecastday[0].day.mintemp }}</span>
+                    <span style="font-size: 16px" class="day"><img [src]="city.forecast.forecastday[0].day.condition.icon" alt="help"/>{{ city.forecast.forecastday[0].day.condition.text }}</span>
+                    
+                </div>
+
+                @for(day of city.forecast.forecastday.slice(1, 5); track day){
+                    <hr>
+                     <div class="forecast-div">
+                        <span class="day">{{ day.date | date:'EEE d' }}</span>
+                        <span class="day">{{ day.day.maxtemp }} / {{ day.day.mintemp }}</span>
+                        <span style="font-size: 16px;" class="day"><img [src]="day.day.condition.icon" alt="help"/>{{ day.day.condition.text }}</span>
+                    </div>
+                }
+
+            </mat-card-content>
+        </mat-card>
+         
+
+    </div>
+
+    <div class="flex-container2">
+
+        <mat-card class="alerts">
+            <mat-card-header>
+                <mat-card-title> Alerts </mat-card-title>
+            </mat-card-header>
+            <mat-card-content id="alert-content">
+                <p>There are no alerts to display</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="air-quality">
+            <mat-card-header>
+                <mat-card-title>Air Quality Index</mat-card-title>
+            </mat-card-header>
+            <mat-card-content id="air-quality-content">
+                <span></span>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+
+</div>
+
+
+    
+       
+
+    
+
+

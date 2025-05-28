@@ -1,6 +1,6 @@
 
 
-<mat-card appearance="outlined" [style.backgroundImage]="'url(' + city.photo + ')'" > <!--use camelCase when using property binding in html (can use to bind css attributes with [style.attbte])-->
+<mat-card [style.backgroundImage]="'url(' + city.photo + ')'" > <!--use camelCase when using property binding in html (can use to bind css attributes with [style.attbte])-->
     <mat-card-header>
         <mat-card-title>
             {{ city.location.name }}
@@ -10,10 +10,9 @@
             <p style="font-size: 64px"> {{ city.current.temp }}</p>
             <span> <img src="{{ city.current.condition.icon }}"> {{city.current.condition.text}} 
                 <span class="spacer"></span>
-                <button class="details" mat-raised-button>SEE DETAILS</button>
+                <a [routerLink]="['/details', city.id]" class="details" mat-raised-button>SEE DETAILS</a>
             </span>
     </mat-card-content>
-    
 </mat-card>
 
 

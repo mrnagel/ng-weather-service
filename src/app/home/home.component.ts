@@ -2,7 +2,10 @@ import { Component, inject, Input} from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { WeatherService } from '../weather.service';
 import { LocationComponent } from '../location/location.component';
-import { City } from '../city';
+import { ActivatedRoute } from '@angular/router';
+import { TempService } from '../temp.service';
+import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -12,21 +15,24 @@ import { City } from '../city';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  weatherService: WeatherService;
-  private dataSubscription: any;
+  weatherService: WeatherService = inject(WeatherService);
   cityData: any[] = [];
-  cities: City[] = [];
-  @Input() tempFormat!: string;
-
-  
-  //constructor should only be used for dependency injection:
-  constructor(){
-    this.weatherService = inject(WeatherService);
-  }
+  tempService: TempService = inject(TempService);
+  route: ActivatedRoute = inject(ActivatedRoute);
+  tempFormat = 'fahrenheit'; // default format
+  subscription: Subscription | undefined;
 
   ngOnInit() {
     this.cityData = this.weatherService.getData();
+    this.subscription = this.tempService.tempFormat$.subscribe((format: string) => {
+      this.tempFormat = format;
+    });
   }
+
+  ngOnDestroy(){
+    this.subscription?.unsubscribe();
+  }
+  
  
 }
 

@@ -1,23 +1,26 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { WeatherService } from './weather.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home/home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TempService } from './temp.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent, MatToolbar, MatSlideToggleModule, MatInputModule, MatProgressSpinnerModule],
+  imports: [RouterModule, HomeComponent, MatToolbar, MatSlideToggleModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'ng-weather-service';
   weatherService: WeatherService = inject(WeatherService); 
+  tempService: TempService = inject(TempService);
   weatherData: any[] = [];
-  tempFormat = 'fahrenheit';
+  currentFormat = 'fahrenheit';
 
   constructor(){
     this.weatherData = this.weatherService.getData();
@@ -28,14 +31,19 @@ export class AppComponent {
 
   onToggleChange(event: MatSlideToggleChange){
     if(event.checked){
-      this.tempFormat = 'celsius';
+      this.currentFormat = 'celsius';
     }
     else{
-      this.tempFormat = 'fahrenheit';
+      this.currentFormat = 'fahrenheit';
     }
+    this.tempService.setTempFormat(this.currentFormat);
 
-    console.log(this.tempFormat)
+    console.log(this.currentFormat)
 
+  }
+
+  filterResults(text: string){
+    console.log("here is the string", text);
   }
 
 }
