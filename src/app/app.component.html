@@ -13,14 +13,24 @@
     <button mat-stroked-button type="button" (click)="filterResults(filter.value); filter.value =''">Search</button>
 </mat-toolbar>
 <mat-toolbar class="secondary">
+    <span class="spacer"></span>
+    <mat-form-field class="sort">
+        <mat-label>Sort by</mat-label>
+        <mat-select (selectionChange)="onOptionSelected($event)">
+            <mat-option value="alphabetical">Alphabetical</mat-option>
+            <mat-option value="temp_asc">Temp. Ascending</mat-option>
+            <mat-option value="temp_desc">Temp. Descending </mat-option>
+            <mat-option value="scramble">Random</mat-option>
+        </mat-select>
+    </mat-form-field>
 </mat-toolbar>
 
-
 <router-outlet></router-outlet>
-<!-- original: <app-home [tempFormat]="tempFormat" ></app-home> -->
 
 <mat-toolbar class="footer">
-    <p style="font-size: 12px"><em>© 2025 matt.nagl. go follow my instagram</em></p>
+    <p style="font-size: 12px"><em>© 2025 matt.nagl. 
+        <span style="font-size: 6px">follow my instagram</span></em>
+    </p>
 </mat-toolbar>
 
 

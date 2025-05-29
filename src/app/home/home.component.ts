@@ -6,8 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TempService } from '../temp.service';
 import { Subscription } from 'rxjs';
 
-
-
 @Component({
   selector: 'app-home',
   imports: [ MatGridListModule, LocationComponent],
@@ -29,6 +27,7 @@ export class HomeComponent {
     this.subscription = this.tempService.tempFormat$.subscribe((format: string) => {
       this.tempFormat = format;
     });
+
   }
 
   ngOnDestroy(){

@@ -2,7 +2,6 @@ import { Component, inject, Input, SimpleChange} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { WeatherService } from '../weather.service';
-import { LocationComponent } from '../location/location.component';
 import { Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { TempService } from '../temp.service';
@@ -10,7 +9,7 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-details',
-  imports: [LocationComponent, CommonModule, MatCardModule, DatePipe],
+  imports: [CommonModule, MatCardModule, DatePipe],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })

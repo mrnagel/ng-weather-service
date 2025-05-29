@@ -8,7 +8,7 @@ mat-toolbar{
     background-color: rgb(86, 96, 96);
     display:flex;
     align-items: center;
-    height: 40px;
+    height: 75px;
 }
 
 .logo{
@@ -16,6 +16,11 @@ mat-toolbar{
     max-width: 72px;
     margin-left: 48px;
     margin-top: 6px;
+}
+
+.sort{
+    margin-top: 20px;
+    margin-right: 125px;
 }
 
 .spacer {
@@ -36,5 +41,8 @@ mat-slide-toggle{
 .footer{
     display: flex;
     justify-content: center;
+    position: relative;
+    bottom: 0;
+    
 }
 

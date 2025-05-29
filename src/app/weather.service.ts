@@ -7,11 +7,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
-  private readonly storageKey = 'cityWeatherData';
-
   private readonly baseUrlComponents: string[] = ['http://api.weatherapi.com/v1/forecast.json?key=647da063ff7b4d5db62174534252305&q=', '&days=5&aqi=no&alerts=yes']
   
-  cityWeatherArray: any[] = []; //have to say any if we don't know strucuture. otherwise will encounter errors below
+  cityWeatherArray: any[] = []; //do not wanna define those massive objects in an interface, respectfully
+
+  //enable dynamic updates from search, sorting, etc.
   filteredCityWeatherArray = new BehaviorSubject<any[]>([]);
   filteredArray$ = this.filteredCityWeatherArray.asObservable();
 
@@ -19,6 +19,7 @@ export class WeatherService {
     this.fetchWeatherData();
   }
 
+  
   private fetchWeatherData() {
     for (let city of this.cityArray) {
       let url = `${this.baseUrlComponents[0]}${city.name}${this.baseUrlComponents[1]}`;
@@ -37,7 +38,6 @@ export class WeatherService {
 
   filterResults(text: string){
     const results = this.cityWeatherArray.filter((city) => city.location.name.toLowerCase().includes(text.toLowerCase()));
-
     this.filteredCityWeatherArray.next(results);
   }
 
@@ -47,6 +47,38 @@ export class WeatherService {
 
   getCityById(id: number){
     return this.cityWeatherArray.find(city => city.id == id) || null;
+  }
+
+  sortArray(text: string){
+    const staticArray = this.filteredCityWeatherArray.getValue();
+    let sorted: any[] = [];
+
+    if(text == 'alphabetical'){
+      sorted = staticArray.sort((a, b) => a.location.name.localeCompare(b.location.name));
+    }
+    else if(text == 'temp_asc'){
+      sorted = staticArray.sort((a, b) => a.current.temp_f - b.current.temp_f);
+    }
+    else if (text == 'temp_desc'){
+      sorted = staticArray.sort((a, b) => b.current.temp_f - a.current.temp_f);
+    }else if(text == 'scramble'){
+      sorted = this.shuffleArray(staticArray);
+    }
+
+    this.filteredCityWeatherArray.next(sorted);
+  }
+
+  //Fisher-Yates shuffle
+  shuffleArray(array: any[]){
+    let currentIndex = array.length;
+
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
   }
 
   cityArray: City[] = [
@@ -130,15 +162,6 @@ export class WeatherService {
       id: 2,
       name: 'Beijing',
       photo: 'https://wallpaperaccess.com/full/3247.jpg',
-    },
-
-    
+    }, 
   ]
-
-  // getAnchorageData(){
-  //   let ancUrl = `${this.baseUrlComponents[0]}Anchorage${this.baseUrlComponents[1]}`;
-  //   return this.http.get(ancUrl);
-    
-
-  // }
 }

@@ -40,15 +40,12 @@
             <mat-card-header>
                 <mat-card-title>Daily Forecast</mat-card-title>
             </mat-card-header>
-
             <mat-card-content>
                 <div class="forecast-div">
                     <span class="day" style="font-weight: 425">Today</span>
                     <span class="day">{{ city.forecast.forecastday[0].day.maxtemp }} / {{ city.forecast.forecastday[0].day.mintemp }}</span>
                     <span style="font-size: 16px" class="day"><img [src]="city.forecast.forecastday[0].day.condition.icon" alt="help"/>{{ city.forecast.forecastday[0].day.condition.text }}</span>
-                    
                 </div>
-
                 @for(day of city.forecast.forecastday.slice(1, 5); track day){
                     <hr>
                      <div class="forecast-div">
@@ -57,11 +54,8 @@
                         <span style="font-size: 16px;" class="day"><img [src]="day.day.condition.icon" alt="help"/>{{ day.day.condition.text }}</span>
                     </div>
                 }
-
             </mat-card-content>
         </mat-card>
-         
-
     </div>
 
     <div class="flex-container2">
@@ -84,8 +78,6 @@
             </mat-card-content>
         </mat-card>
     </div>
-    
-
 </div>
 
 

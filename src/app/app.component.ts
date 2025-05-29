@@ -5,13 +5,13 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { HomeComponent } from './home/home.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { TempService } from './temp.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, HomeComponent, MatToolbar, MatSlideToggleModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule],
+  imports: [RouterModule, MatToolbar, MatSlideToggleModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatSelectModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -22,11 +22,7 @@ export class AppComponent {
   weatherData: any[] = [];
   currentFormat = 'fahrenheit';
 
-  constructor(){
-    //need to make sure WeatherService is injected before the above function is called, hence in constructor
-    //at this point, WeatherService will have been injected
-    //angular initializes properties before the constructor runs
-  }
+  constructor(){}
 
   onToggleChange(event: MatSlideToggleChange){
     if(event.checked){
@@ -39,6 +35,10 @@ export class AppComponent {
 
     console.log(this.currentFormat)
 
+  }
+
+  onOptionSelected(event: any){
+    this.weatherService.sortArray(event.value);
   }
 
   filterResults(text: string){
