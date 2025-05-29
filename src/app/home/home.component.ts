@@ -15,10 +15,12 @@ import { Subscription } from 'rxjs';
 export class HomeComponent {
   weatherService: WeatherService = inject(WeatherService);
   cityData: any[] = [];
+
   tempService: TempService = inject(TempService);
   route: ActivatedRoute = inject(ActivatedRoute);
+
   tempFormat = 'fahrenheit'; // default format
-  subscription: Subscription | undefined;
+  subscription: Subscription | undefined; //for unit format updates 
 
   ngOnInit() {
     this.weatherService.filteredArray$.subscribe(data => {

@@ -6,7 +6,7 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        title: 'Le Weather App',
+        title: 'Some Weather App',
     },
     {
         path: 'details/:id',

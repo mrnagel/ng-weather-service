@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
+
+  //storing api key directly in the component is obviously a bad idea
+  //for my purposes this is more convenient though
   private readonly baseUrlComponents: string[] = ['http://api.weatherapi.com/v1/forecast.json?key=647da063ff7b4d5db62174534252305&q=', '&days=5&aqi=no&alerts=yes']
   
   cityWeatherArray: any[] = []; //do not wanna define those massive objects in an interface, respectfully
@@ -18,8 +21,9 @@ export class WeatherService {
   constructor(private http: HttpClient) {
     this.fetchWeatherData();
   }
-
   
+  //fetch api data for each city in the Cities array below
+  //also adds my own id's and photos to each city in the new weather dataset (confusing ik)
   private fetchWeatherData() {
     for (let city of this.cityArray) {
       let url = `${this.baseUrlComponents[0]}${city.name}${this.baseUrlComponents[1]}`;
@@ -29,7 +33,6 @@ export class WeatherService {
           photo: city.photo,
           id: Number(city.id),
         };
-
         this.cityWeatherArray.push(cityDataWithPhoto);
       });
     }
@@ -41,15 +44,11 @@ export class WeatherService {
     this.filteredCityWeatherArray.next(results);
   }
 
-  getData(){
-    return this.filteredCityWeatherArray;
-  }
-
-  getCityById(id: number){
+  getCityById(id: number){ //used by details component
     return this.cityWeatherArray.find(city => city.id == id) || null;
   }
 
-  sortArray(text: string){
+  sortArray(text: string){ //used for sorting functionality in app component
     const staticArray = this.filteredCityWeatherArray.getValue();
     let sorted: any[] = [];
 
@@ -81,6 +80,7 @@ export class WeatherService {
     return array;
   }
 
+  //source cities array (might try and implement Google Places API)
   cityArray: City[] = [
     {
       id: 8,
